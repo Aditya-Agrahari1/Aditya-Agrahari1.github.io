@@ -386,8 +386,8 @@
     <div class="glass-overlay"></div>
     
     <!-- Background Music -->
-    <audio id="backgroundMusic" loop>
-        <source src="https://github.com/Aditya-Agrahari1/Aditya-Agrahari1.github.io/blob/main/warriyo_mortals_lyrics_whatsapp_status_english_song_aesthetic_.m4a" type="audio/mpeg">
+    <audio id="backgroundMusic" loop autoplay>
+        <source src="https://raw.githubusercontent.com/Aditya-Agrahari1/Aditya-Agrahari1.github.io/main/warriyo_mortals_lyrics_whatsapp_status_english_song_aesthetic_.m4a" type="audio/mpeg">
     </audio>
     
     <!-- Music Control Button -->
@@ -441,6 +441,23 @@
         // Set volume to a comfortable level
         audio.volume = 0.3;
 
+        // Attempt to play audio on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            audio.play().then(() => {
+                isPlaying = true;
+                musicToggle.textContent = '🎶';
+                musicToggle.classList.add('playing');
+                musicToggle.classList.remove('muted');
+            }).catch(error => {
+                console.log('Autoplay prevented:', error);
+                // Autoplay was prevented, keep the button as 'paused' state
+                isPlaying = false;
+                musicToggle.textContent = '🎵';
+                musicToggle.classList.remove('playing');
+                musicToggle.classList.add('muted');
+            });
+        });
+
         musicToggle.addEventListener('click', function() {
             if (isPlaying) {
                 audio.pause();
@@ -472,11 +489,11 @@
             isPlaying = false;
         });
 
-        // Auto-play attempt (many browsers block this)
-        window.addEventListener('load', function() {
-            // Don't auto-play, let user choose
-            musicToggle.textContent = '🎵';
-        });
+        // Auto-play attempt (many browsers block this) - REMOVED as it's handled by DOMContentLoaded
+        // window.addEventListener('load', function() {
+        //     // Don't auto-play, let user choose
+        //     musicToggle.textContent = '🎵';
+        // });
     </script>
 </body>
 </html>
